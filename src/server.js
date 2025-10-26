@@ -1,9 +1,9 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import helmet from 'helmet;'
+import helmet from 'helmet';
 
-import { authMiddleware } from './middleware/authMiddleware';
+import authMiddleware from './middleware/authMiddleware.js'
 
 dotenv.config();
 
