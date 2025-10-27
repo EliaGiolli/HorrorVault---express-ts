@@ -1,185 +1,201 @@
 # 🎃 HorrorVault Express
 
-Un'applicazione CRUD Node.js + Express progettata per gestire utenti, autenticazione JWT e newsletter, con un tocco horror.
-Sicura, modulare e pronta a essere estesa in un progetto full-stack in futuro.
+A Node.js + Express CRUD application designed to manage users, authentication with JWT, and newsletters, with a horror twist.
+Secure, modular, and ready to be extended into a full-stack project in the future.
 
-## 🧠 Indice
+## 🧠 Table of Contents
+### Project Information
 
-### Informazioni sul progetto
+#### Technologies Used
 
-**Tecnologie usate**
+#### Project Structure
 
-Struttura del progetto
+- Installation
 
-- Installazione
+- Environment Configuration
 
-- Configurazione ambiente
+- Usage
 
-- Utilizzo
+- Main Endpoints
 
-- Endpoints principali
+- Contributing
 
-- Contribuire
+- License
 
-- Licenza
+- Contacts
 
-- Contatti
+## 🧟‍♂️ Project Information
 
-## 🧟‍♂️ Informazioni sul progetto
+HorrorVault Express is a backend application built with Node.js, Express, and MongoDB.
+It aims to provide a robust and secure RESTful infrastructure to handle:
 
-HorrorVault Express è un’applicazione backend sviluppata in Node.js, Express e MongoDB.
-L’obiettivo è creare un’infrastruttura RESTful solida e sicura per gestire:
+- User registration and authentication (signup, login, JWT token generation)
 
-- Utenti e autenticazione (registrazione, login, token JWT)
+- Newsletter subscriptions
 
-- Iscrizioni a una newsletter
+- Email handling using Nodemailer over SMTP/POP3 (showing practical TCP/IP protocol usage in Node.js projects)
 
-- Integrazione con Nodemailer per l’invio email
+- Data persistence with Mongoose
 
-- Dati persistenti con Mongoose
+- The project follows a Model–View–Controller (MVC) architecture to keep code clean, scalable, and modular.
 
-Il progetto segue un’architettura MVC (Model–View–Controller) per mantenere il codice pulito, scalabile e modulare.
+## ⚙️ Technologies Used
 
-## ⚙️ Tecnologie usate
+- **Node.js** — server-side JavaScript runtime
 
-- **Node.js** — runtime JavaScript lato server
+- **Express.js** — routing and middleware management
 
-- **Express.js** — web framework per la gestione delle rotte e middleware
+- **MongoDB** + Mongoose — NoSQL database and ODM
 
-- **MongoDB + Mongoose** — database NoSQL e ODM
+- **JWT (jsonwebtoken)** — secure token-based authentication
 
-- **JWT (jsonwebtoken)** — autenticazione sicura basata su token
+- **bcrypt** — password hashing
 
-- **bcrypt** — hashing delle password
+- **Nodemailer** — email sending via SMTP/POP3 protocols for newsletter and notifications
 
-- **Nodemailer** — invio email per newsletter o notifiche
+- **Helmet** — HTTP header security
 
-- **Helmet** — protezione HTTP headers
+- **dotenv** — environment variable management
 
-- **dotenv** — gestione delle variabili d’ambiente
+- **TypeScript** — fully typed code, executed in development without tsconfig.json
 
-- **Nodemon** — reload automatico in sviluppo
+- **Node --watch** — native hot-reload in development without nodemon
 
-## 📁 Struttura del progetto
+## 📁 Project Structure
 
-Esempio tipico della struttura delle cartelle:
-``` bash
+Typical folder structure:
+
+```bash
 horrorvault-express/
 │
 ├── src/
 │   ├── config/
-│   │   └── nodemailer.js
+│   │   └── nodemailer.ts
+        └── env.ts
 │   │
 │   ├── controllers/
-│   │   ├── userController.js
-│   │   ├── newsletterController.js
-│   │   └── filmController.js
+│   │   ├── userController.ts
+│   │   └── filmController.ts
 │   │
 │   ├── services/
-│   │   ├── userService.js
-│   │   ├── newsletterService.js
-│   │   └── filmService.js
+│   │   ├── userService.ts
+│   │   ├── newsletterService.ts
+│   │   └── filmService.ts
 │   │
 │   ├── models/
-│   │   ├── userModel.js
-│   │   └── filmModel.js
+│   │   ├── userModel.ts
+│   │   └── filmModel.ts
 │   │
-│   ├── routes/
-│   │   ├── userRoutes.js
-│   │   ├── newsletterRoutes.js
-│   │   └── filmRoutes.js
+│   ├── schema/
+│   │   └── authSchema.ts
+│   │ 
+    ├── routes/
+│   │   ├── userRoutes.ts
+│   │   └── filmRoutes.ts
 │   │
-│   └── index.js
+│   └── index.ts
+    └── server.ts
 │
 ├── .env
 ├── package.json
 └── README.md
 ```
+---
+## 🧩 Installation
 
-## 🧩 Installazione
-1. Clona la repo
+Clone the repository:
 ```bash
-git clone https://github.com/<tuo-username>/horrorvault-express.git
-```
-```bash
+git clone https://github.com/<your-username>/horrorvault-express.git
 cd horrorvault-express
 ```
 
-2. Installa le dipendenze
+Install dependencies:
 ```bash
 npm install
 ```
-3. Avvia il server in modalità sviluppo
+
+Start the server in development mode:
 ```bash
 npm start
 ```
 
-## 🔐 Configurazione ambiente
+Uses Node’s native --watch flag to automatically reload on code changes, combined with TypeScript execution without tsconfig.json for fast dev workflow.
 
-Crea un file .env nella root del progetto e inserisci le seguenti variabili:
+## 🔐 Environment Configuration
+
+Create a .env file in the root directory:
+
 ```bash
 PORT=5000
 MONGO_URI=mongodb://localhost:27017/horrorvault
-JWT_SECRET=supersegreto123
-EMAIL_USER=tuamail@gmail.com
-EMAIL_PASS=tuapassword
+JWT_SECRET=supersecret123
+EMAIL_USER=yourmail@gmail.com
+EMAIL_PASS=yourpassword
+APP_NAME=HorrorVault
+APP_EMAIL=yourmail@gmail.com
 ```
 
-⚠️ Non committare mai il file .env su GitHub.
-Usa .gitignore per proteggerlo.
+⚠️ Never commit .env to GitHub — use .gitignore to protect sensitive information.
+---
+## 🚀 Usage
 
-## 🚀 Utilizzo
+After starting the server (npm start), the API is available locally at:
 
-Una volta avviato il server (npm start), puoi accedere alle API locali su:
 ```bash
 http://localhost:5000/api
 ```
 
-### Esempio richieste:
+Example Requests
+POST /api/users/signup → register a new user
+POST /api/users/login → authenticate user and get JWT token
+POST /api/newsletter/subscribe → subscribe to newsletter
+GET /api/films → get the list of horror films
 
-```bash
-POST /api/users/signup → registra un nuovo utente
+## 🧠 Main Endpoints
 
-POST /api/users/login → autenticazione e rilascio token JWT
+| Method | Endpoint                    | Description              | Protected | Body / Params                   |
+| ------ | --------------------------- | ------------------------ | --------- | ------------------------------- |
+| POST   | `/api/users/signup`         | Register a new user      | ❌         | `{ email, password }`           |
+| POST   | `/api/users/login`          | Log in and get JWT token | ❌         | `{ email, password }`           |
+| POST   | `/api/newsletter/subscribe` | Subscribe to newsletter  | ✅         | `{ email }`                     |
+| GET    | `/api/films`                | Get all films            | ✅         | –                               |
+| GET    | `/api/films/:id`            | Get a single film        | ✅         | `id` in URL                     |
+| PUT    | `/api/films/:id`            | Update a film            | ✅         | `{ title?, description?, ... }` |
+| DELETE | `/api/films/:id`            | Delete a film            | ✅         | `id` in URL                     |
+| POST   | `/api/films/:id/banner`     | Upload a film banner     | ✅         | `id` in URL + file/body payload |
 
-POST /api/newsletter/subscribe → iscrive un utente alla newsletter
+---
+## 🔧 Development Notes
 
-GET /api/films → lista dei film horror salvati
-```
+Emails are sent using Nodemailer, demonstrating practical use of SMTP/POP3 protocols, important for showcasing TCP/IP knowledge in Node.js.
 
-## 🧠 Endpoints principali
-Metodo	Rotta	Descrizione
-POST	/api/users/signup	Crea un nuovo utente
-POST	/api/users/login	Login e generazione token JWT
-POST	/api/newsletter/subscribe	Iscrizione newsletter
-GET	/api/films	Ottiene tutti i film
-PUT	/api/films/:id	Aggiorna un film
-DELETE	/api/films/:id	Elimina un film
+Node’s --watch flag provides native hot reload without extra dependencies like nodemon.
 
-## 🤝 Contribuire
+TypeScript is executed directly via ts-node in dev environments without the need for a tsconfig.json, simplifying setup and speeding up development.
+---
+## 🤝 Contributing
 
-Contributi, segnalazioni bug e idee sono sempre benvenuti!
+Contributions, bug reports, and ideas are welcome!
 
-- Fai un fork del progetto
+- Fork the project
 
-- Crea un nuovo branch (git checkout -b feature/nuova-feature)
+- Create a new branch: git checkout -b feature/new-feature
 
-- Fai commit delle modifiche (git commit -m 'Aggiunta nuova feature')
+- Commit changes: git commit -m 'Add new feature'
 
-- Fai push sul branch (git push origin feature/nuova-feature)
+- Push the branch: git push origin feature/new-feature
 
-- Apri una Pull Request
+- Open a Pull Request
+---
+## 🧾 License
 
-## 🧾 Licenza
+Distributed under the ISC License. See LICENSE for more details.
 
-Distribuito sotto licenza ISC.
-Vedi LICENSE per ulteriori dettagli.
+## 📬 Contacts
 
-## 📬 Contatti
-
-👤 Autore: Giolli Elia
+👤 Author: Giolli Elia
 
 🔗 GitHub: https://github.com/EliaGiolli
+---
 
-❤️ Ispirato da Best README Template
-
+❤️ Inspired by Best README Template

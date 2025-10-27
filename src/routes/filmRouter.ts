@@ -27,4 +27,4 @@ filmRouter.delete('/:id', deleteFilm);
 filmRouter.put('/:id', updateFilm);
 
 // POST
-filmRouter.post('/:id', createFilmBanner);
+filmRouter.post('/:id/banner', createFilmBanner);

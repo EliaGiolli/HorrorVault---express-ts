@@ -1,5 +1,5 @@
 import { UserService } from '../services/userService';
-import { signupSchema, loginSchema } from '../schemas/filmSchema';
+import { signupSchema, loginSchema } from '../schemas/authSchema';
 //Types
 import { Request, Response } from 'express';
 //Nodemailer
