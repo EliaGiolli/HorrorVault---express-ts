@@ -4,6 +4,8 @@ import {
     validateCredentials, 
     createNewUser
 } from '../services/userService';
+//Nodemailer
+import { sendMail } from '../services/mailService';
 
 // Sign-up
 export const signUpUser = async (req, res) => {
@@ -16,6 +18,17 @@ export const signUpUser = async (req, res) => {
 
         // Create new user
         await createNewUser(email, password);
+
+        //Nodemailer
+        await sendMail({
+          to: email,
+          subject: "Welcome to HorrorVault!",
+          html: `
+            <h2>Welcome to HorrorVault!</h2>
+            <p>Your account is successfully created.</p>
+            <p>Now you can login and enjoy our movies and our newslwtter.</p>
+          `,
+        });
 
         res.status(201).json({ message: "User created successfully" });
         

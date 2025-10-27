@@ -1,9 +1,9 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 import helmet from 'helmet';
 
 import authMiddleware from './middleware/authMiddleware.js';
+import './config/env.js';
 import { authRouter } from './routes/authRoute.js';
 import { filmRouter } from './routes/filmRouter.js';
 
