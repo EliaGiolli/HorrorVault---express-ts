@@ -1,23 +1,22 @@
-import {
-    userExists, 
-    findUserByEmail, 
-    validateCredentials, 
-    createNewUser
-} from '../services/userService';
+import { UserService } from '../services/userService';
+//Types
+import { Request, Response } from 'express';
 //Nodemailer
 import { sendMail } from '../services/mailService';
 
+const authService = new UserService();
+
 // Sign-up
-export const signUpUser = async (req, res) => {
+export const signUpUser = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
 
         // Check if user already exists
-        const exists = await userExists(email);
+        const exists = await authService.userExists(email);
         if (exists) return res.status(400).json({ error: "User already exists" });
 
         // Create new user
-        await createNewUser(email, password);
+        await authService.createNewUser(email, password);
 
         //Nodemailer
         await sendMail({
@@ -33,27 +32,27 @@ export const signUpUser = async (req, res) => {
         res.status(201).json({ message: "User created successfully" });
         
   } catch (err) {
-    return res.status(400).json({ error: (err).message });
+    return res.status(400).json({ error: (err as Error).message });
   }
 }
 
 // Log-in
-export const logInUser = async (req, res) => {
+export const logInUser = async (req: Request, res: Response) => {
 
     try {
         const { email, password } = req.body;
 
         // Find user by email
-        const user = await findUserByEmail(email);
+        const user = await authService.findUserByEmail(email);
         if (!user) return res.status(401).json({ error: "Invalid credentials" });
 
         // Validate credentials and get JWT token
-        const token = await validateCredentials(password, user);
+        const token = await authService.validateCredentials(password, user);
 
         res.json({ token });
 
   } catch (err) {
-    return res.status(400).json({ error: (err).message });
+    return res.status(400).json({ error: (err as Error).message });
   }
 }
 

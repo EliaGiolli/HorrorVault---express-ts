@@ -1,4 +1,12 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
+
+export interface IFilm extends Document {
+    filmTitle: string,
+    filmGenre: string,
+    filmDescription: string,
+    directorName: string,
+    year: Date
+}
 
 const filmSchema = new Schema({
     filmTitle: { type: String, require:true },
@@ -9,4 +17,4 @@ const filmSchema = new Schema({
 })
 
 
-export const Film = mongoose.model(filmSchema);
+export const Film = mongoose.model<IFilm>("Film",filmSchema);

@@ -1,17 +1,15 @@
-import {
-    getFilms, 
-    getSigleFilm, 
-    deleteFilm, 
-    updateFilm, 
-    createNewFilmBanner
-} from '../services/filmService';
+import { FilmService } from '../services/filmService';
 
+import { Request, Response } from 'express';
+import { IFilm } from '../models/filmModel';
+
+const filmService = new FilmService();
 //GET :id
-export const getSingleFilm = async (req, res) => {
+export const getSingleFilm = async (req: Request, res: Response) => {
 
     try {
         const { id } = req.params;
-        const newFilm = await getSigleFilm(id);
+        const newFilm = await filmService.getSigleFilm(id);
 
         if(newFilm){
             return res.status(200).json(newFilm)
@@ -25,14 +23,14 @@ export const getSingleFilm = async (req, res) => {
 }
 
 // GET
-export const getAllFilms = async (req, res) => {
+export const getAllFilms = async (req: Request, res: Response) => {
     try {
-        const films = getFilms();
+        const films = filmService.getFilms();
 
         if(films) {
             return res.status(200).json(films)
         }else{
-            return res.status({ error: "unable to find film banners"})
+            return res.status(404).json({ error: "unable to find film banners"})
         }
     } catch(err) {
         return res.status(500).json({ message: "Server error"})
@@ -40,17 +38,17 @@ export const getAllFilms = async (req, res) => {
 }
 
 // DELETE
-export const deleteFilm = async (req, res) => {
+export const deleteFilm = async (req: Request, res: Response) => {
 
     try{
 
         const { id } = req.params;
-        const deletedFilm = deleteFilm(id);
+        const deletedFilm = filmService.deleteFilm(id);
 
         if(deletedFilm) {
             return res.status(200).json(deletedFilm)
         } else{
-            return res.status({ error: "unable to find film banners"})
+            return res.status(404).json({ error: "unable to find film banners"})
         }
 
     } catch(err) {
@@ -59,19 +57,19 @@ export const deleteFilm = async (req, res) => {
 }
 
 // UPDATE
-export async function updateFilm(req, res) {
+export async function updateFilm(req:Request, res: Response) {
     try {
         const { id } = req.params;
         const updateData = req.body;
 
         if (updateData.releaseDate && typeof updateData.releaseDate === "string") {
             const { releaseDate, ...rest } = updateData;
-            const updateDataWithDate = {
+            const updateDataWithDate: Partial<IFilm> = {
                 ...rest,
                 releaseDate: new Date(releaseDate)
             };
 
-            const updatedFilm = await Film.findByIdAndUpdate(id, updateDataWithDate, { new: true });
+            const updatedFilm = await filmService.updateFilm(id, updateDataWithDate );
 
             if (updatedFilm) {
                 return res.status(200).json(updatedFilm);
@@ -79,7 +77,7 @@ export async function updateFilm(req, res) {
                 return res.status(404).json({ error: 'Film not found' });
             }
         } else {
-            const updatedFilm = await Film.findByIdAndUpdate(id, updateData, { new: true });
+            const updatedFilm = await filmService.updateFilm(id, updateData as Partial<IFilm>);
 
             if (updatedFilm) {
                 return res.status(200).json(updatedFilm);
@@ -96,7 +94,7 @@ export async function updateFilm(req, res) {
 
 // CREATE
 
-export const createFilmBanner = async (req, res) => {
+export const createFilmBanner = async (req: Request, res: Response) => {
 
     try {
         
@@ -106,7 +104,7 @@ export const createFilmBanner = async (req, res) => {
             return res.status(400).json({ error: "Missing required fields" });
         }
         
-        const newFilmBanner = await createNewFilmBanner(
+        const newFilmBanner = await filmService.createNewFilmBanner(
             filmTitle, filmDescription, filmGenre, directorName, year
         );
         return res.status(201).json(newFilmBanner);

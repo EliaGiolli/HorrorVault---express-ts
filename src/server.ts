@@ -1,13 +1,13 @@
-import express from 'express';
+//External libraries
+import express, { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import helmet from 'helmet';
-
-import authMiddleware from './middleware/authMiddleware.js';
-import './config/env.js';
+//Internal files
+import { authMiddleware, AuthenticatedRequest } from './middleware/authMiddleware.js';
 import { authRouter } from './routes/authRoute.js';
 import { filmRouter } from './routes/filmRouter.js';
-
-dotenv.config();
+//ENV variables
+import './config/env.js';
 
 // Configuration of the Express server
 export const app = express();
@@ -15,12 +15,12 @@ app.use(helmet());
 app.use(express.json());
 
 // Connection to MongoDB
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI!)
     .then(() => console.log('CONNECTED TO THE DATABASE'))
     .catch(err => console.error("CONNECTION TO DB FAILED: ", err))
 
 // Protected route
-app.get("/protected", authMiddleware, (req, res) => {
+app.get("/protected", authMiddleware, (req:AuthenticatedRequest, res: Response) => {
     res.json({ message: "Access granted!", user: req.user });
 });
   

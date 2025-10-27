@@ -6,7 +6,7 @@ import {
     updateFilm
 } from '../controllers/filmController';
 
-import authMiddleware from '../middleware/authMiddleware';
+import { authMiddleware } from '../middleware/authMiddleware';
 import express from 'express';
 
 export const filmRouter = express.Router();
