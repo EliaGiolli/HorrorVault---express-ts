@@ -3,7 +3,9 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
 
-import authMiddleware from './middleware/authMiddleware.js'
+import authMiddleware from './middleware/authMiddleware.js';
+import { authRouter } from './routes/authRoute.js';
+import { filmRouter } from './routes/filmRouter.js';
 
 dotenv.config();
 
@@ -22,6 +24,7 @@ app.get("/protected", authMiddleware, (req, res) => {
     res.json({ message: "Access granted!", user: req.user });
 });
   
-// Other routes
-
+// Public routes
+app.use("/auth", authRouter);
+app.use("/films", filmRouter);
 
