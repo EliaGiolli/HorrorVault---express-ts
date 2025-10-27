@@ -1,4 +1,5 @@
 import { UserService } from '../services/userService';
+import { signupSchema, loginSchema } from '../schemas/filmSchema';
 //Types
 import { Request, Response } from 'express';
 //Nodemailer
@@ -9,7 +10,7 @@ const authService = new UserService();
 // Sign-up
 export const signUpUser = async (req: Request, res: Response) => {
     try {
-        const { email, password } = req.body;
+        const { email, password } = signupSchema.parse(req.body);
 
         // Check if user already exists
         const exists = await authService.userExists(email);
@@ -40,7 +41,7 @@ export const signUpUser = async (req: Request, res: Response) => {
 export const logInUser = async (req: Request, res: Response) => {
 
     try {
-        const { email, password } = req.body;
+        const { email, password } = loginSchema.parse(req.body);
 
         // Find user by email
         const user = await authService.findUserByEmail(email);
