@@ -33,6 +33,7 @@ export class UserService {
             process.env.JWT_SECRET,
             { expiresIn: "1h" }
         );
+
         return token;
     }
     

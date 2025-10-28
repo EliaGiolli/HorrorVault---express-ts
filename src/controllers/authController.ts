@@ -50,6 +50,13 @@ export const logInUser = async (req: Request, res: Response) => {
         // Validate credentials and get JWT token
         const token = await authService.validateCredentials(password, user);
 
+      //Cookie HTTPOnly
+        res.cookie("jwt", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "strict",
+          maxAge: 60 * 60 * 1000,
+        });
         res.json({ token });
 
   } catch (err) {
