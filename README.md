@@ -47,7 +47,7 @@ It aims to provide a robust and secure RESTful infrastructure to handle:
 
 - **MongoDB** + Mongoose — NoSQL database and ODM
 
-- **JWT (jsonwebtoken)** — secure token-based authentication
+- **JWT (jsonwebtoken)** and **Cookie HTTPOnly** — secure token-based authentication
 
 - **bcrypt** — password hashing
 
